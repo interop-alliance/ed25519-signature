@@ -1,64 +1,97 @@
 {
-  "name": "@digitalbazaar/ed25519-signature-2020",
-  "version": "5.4.1-0",
-  "description": "Ed25519Signature2020 Linked Data Proof suite for use with jsonld-signatures.",
-  "homepage": "https://github.com/digitalbazaar/ed25519-signature-2020",
+  "name": "@interop/ed25519-signature",
+  "version": "6.0.0",
+  "description": "Ed25519 Linked Data / Data Integrity signature suites (Ed25519Signature2020, eddsa-rdfc-2022, eddsa-jcs-2022) in TypeScript.",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./ed25519-signature-2020": {
+      "types": "./dist/ed25519-signature-2020/index.d.ts",
+      "default": "./dist/ed25519-signature-2020/index.js"
+    },
+    "./eddsa-rdfc-2022": {
+      "types": "./dist/eddsa-rdfc-2022/index.d.ts",
+      "default": "./dist/eddsa-rdfc-2022/index.js"
+    },
+    "./eddsa-jcs-2022": {
+      "types": "./dist/eddsa-jcs-2022/index.d.ts",
+      "default": "./dist/eddsa-jcs-2022/index.js"
+    }
+  },
+  "browser": {
+    "./dist/core/sha256.js": "./dist/core/sha256-browser.js"
+  },
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "CHANGELOG.md",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "pnpm run clear && tsc",
+    "clear": "rimraf dist/*",
+    "dev": "vite",
+    "fix": "eslint --fix src test && pnpm run format",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "eslint src test",
+    "prepare": "pnpm run build",
+    "rebuild": "pnpm run clear && pnpm run build",
+    "test": "pnpm run lint && pnpm run test-node",
+    "test-browser": "playwright test",
+    "test-node": "vitest run",
+    "test-coverage": "vitest run --coverage"
+  },
+  "homepage": "https://github.com/interop-alliance/ed25519-signature",
   "repository": {
     "type": "git",
-    "url": "https://github.com/digitalbazaar/ed25519-signature-2020"
+    "url": "git+https://github.com/interop-alliance/ed25519-signature.git"
   },
   "license": "BSD-3-Clause",
-  "type": "module",
-  "exports": "./lib/index.js",
-  "files": [
-    "lib/**/*.js"
-  ],
   "dependencies": {
-    "@digitalbazaar/ed25519-multikey": "^1.2.0",
-    "@digitalbazaar/ed25519-verification-key-2020": "^4.1.0",
-    "base58-universal": "^2.0.0",
+    "@digitalbazaar/data-integrity": "^2.5.0",
+    "@interop/ed25519-verification-key": "^6.1.0",
+    "@interop/jsonld": "^9.0.2",
+    "canonicalize": "^2.0.0",
     "ed25519-signature-2020-context": "^1.1.0",
-    "jsonld-signatures": "^11.3.0"
+    "rdf-canonize": "^5.0.0"
+  },
+  "peerDependencies": {
+    "@interop/jsonld-signatures": "^11.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@interop/jsonld-signatures": {
+      "optional": true
+    }
   },
   "devDependencies": {
-    "@digitalbazaar/ed25519-verification-key-2018": "^4.0.0",
-    "@digitalbazaar/security-document-loader": "^3.0.0",
-    "c8": "^7.12.0",
-    "chai": "^4.3.7",
-    "cross-env": "^7.0.3",
-    "ed25519-signature-2018-context": "^1.1.0",
-    "eslint": "^8.34.0",
-    "eslint-config-digitalbazaar": "^5.2.0",
-    "eslint-plugin-jsdoc": "^50.2.2",
-    "eslint-plugin-unicorn": "^55.0.0",
-    "karma": "^6.4.1",
-    "karma-chai": "^0.1.0",
-    "karma-chrome-launcher": "^3.1.1",
-    "karma-mocha": "^2.0.1",
-    "karma-mocha-reporter": "^2.2.5",
-    "karma-sourcemap-loader": "^0.4.0",
-    "karma-webpack": "^5.0.0",
-    "mocha": "^10.2.0",
-    "mocha-lcov-reporter": "^1.3.0",
-    "webpack": "^5.75.0"
+    "@digitalcredentials/security-document-loader": "file:../../DCC/security-document-loader",
+    "@eslint/js": "^10.0.1",
+    "@interop/jsonld-signatures": "^11.6.2",
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^22.0.0",
+    "@vitest/coverage-v8": "^4.1.7",
+    "eslint": "^10.4.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.6.0",
+    "prettier": "^3.8.3",
+    "rimraf": "^6.1.3",
+    "typescript": "^5.5.0",
+    "typescript-eslint": "^8.59.4",
+    "vite": "^6.3.5",
+    "vitest": "^4.1.7"
   },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "packageManager": "pnpm@10.20.0",
   "engines": {
-    "node": ">=18"
-  },
-  "scripts": {
-    "test": "npm run test-node",
-    "test-karma": "karma start karma.conf.cjs",
-    "test-node": "cross-env NODE_ENV=test mocha --preserve-symlinks -t 30000 -A -R ${REPORTER:-spec} --require test/test-mocha.js test/*.spec.js",
-    "coverage": "cross-env NODE_ENV=test c8 npm run test-node",
-    "coverage-ci": "cross-env NODE_ENV=test c8 --reporter=lcovonly --reporter=text-summary --reporter=text npm run test-node",
-    "coverage-report": "c8 report",
-    "lint": "eslint ."
-  },
-  "c8": {
-    "reporter": [
-      "lcov",
-      "text-summary",
-      "text"
-    ]
+    "node": ">=20"
   }
 }

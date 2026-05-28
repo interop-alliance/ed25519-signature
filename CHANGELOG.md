@@ -1,4 +1,45 @@
-# @digitalbazaar/ed25519-signature-2020 Changelog
+# @interop/ed25519-signature Changelog
+
+## 6.0.0 -
+### Changed
+- **BREAKING: Renamed** from `@digitalbazaar/ed25519-signature-2020` to
+  `@interop/ed25519-signature` (rename-in-place; preserves git history and the
+  committed spec test vectors).
+- **BREAKING: New architecture.** The package now provides all three Ed25519
+  proof flavors -- `Ed25519Signature2020`, `eddsa-rdfc-2022`, and
+  `eddsa-jcs-2022` -- unified on the `DataIntegrityProof` container model. The
+  legacy `Ed25519Signature2020` suite is now a thin subclass of
+  `DataIntegrityProof` (not a `LinkedDataSignature` subclass); its signed bytes
+  remain byte-identical to the legacy suite (pinned acceptance test).
+- **BREAKING: New API surface.** Per-suite subpath exports
+  (`./ed25519-signature-2020`, `./eddsa-rdfc-2022`, `./eddsa-jcs-2022`) plus a
+  root barrel; `sideEffects: false` for tree-shaking. The three suites expose
+  deliberately different shapes (class vs static cryptosuite vs sign/verify
+  factories), matching their specs.
+- **BREAKING: Ported to TypeScript** (`src/` to `dist/` via `tsc`); ESM-only,
+  Node.js 20+. New pnpm + Vitest + Playwright + ESLint + Prettier toolchain
+  (the karma/mocha/webpack stack was dropped).
+- Single key library: `@interop/ed25519-verification-key` (reads Multikey +
+  2020 + 2018 + JWK), replacing `@digitalbazaar/ed25519-multikey` and
+  `@digitalbazaar/ed25519-verification-key-2020`.
+- Uses `@interop/jsonld-signatures` as the `jsigs.sign` / `jsigs.verify` entry
+  point and `@interop/jsonld` for RDFC-1.0 canonicalization.
+
+### Added
+- `eddsa-rdfc-2022` cryptosuite (DataIntegrityProof, RDFC-1.0).
+- `eddsa-jcs-2022` sign/verify cryptosuite factories (DataIntegrityProof, JCS /
+  RFC 8785), including the spec context-prefix ordering check.
+- `createSigner` / `createVerifier` core helpers (inject the `algorithm`
+  property `DataIntegrityProof` requires; idempotent).
+- Mixed-proof-array verification test (one VC carrying all three proof types,
+  disambiguated by `matchProof`).
+
+### Fixed
+- `eddsa-jcs-2022` verify: the context-prefix check now compares `@context`
+  entries by value, not reference, so a VC carrying an inline `@context` object
+  verifies after a JSON round-trip (the realistic transport path). The previous
+  reference (`!==`) comparison, mirrored from the upstream spec reference impl,
+  wrongly rejected such VCs.
 
 ## 5.4.0 - 2024-08-01
 

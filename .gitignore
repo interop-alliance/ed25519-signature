@@ -109,3 +109,14 @@ dist
 
 # VSCode
 .vscode
+
+# Playwright
+playwright-report/
+test-results/
+.playwright/
+
+# Vite
+.vite/
+
+# MacOS
+.DS_Store

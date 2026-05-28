@@ -11,7 +11,7 @@ export default defineConfig([
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,
-      prettierConfig
+      prettierConfig // must be last in extends
     ],
     languageOptions: {
       ecmaVersion: 2022,

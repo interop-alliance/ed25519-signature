@@ -1,6 +1,6 @@
 # @interop/ed25519-signature Changelog
 
-## 6.0.0 - 2026-05-27
+## 6.0.0-6.0.1 - 2026-05-27
 ### Changed
 - **BREAKING: Renamed** from `@digitalbazaar/ed25519-signature-2020` to
   `@interop/ed25519-signature` (rename-in-place; preserves git history and the

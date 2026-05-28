@@ -34,6 +34,14 @@ function modifyForSign({
 
 // On verify: assert document.@context starts with proof.@context in order.
 // This ordering check is security-sensitive per the JCS spec.
+//
+// Entries are compared by VALUE, not reference: an inline @context object (e.g.
+// {AlumniCredential: ...}) becomes a distinct instance once the VC is
+// serialized and re-parsed, so a reference (`!==`) compare wrongly rejects every
+// transmitted VC that carries one. JSON.stringify gives the value compare the
+// spec asks for; it is key-order sensitive, but both @context trees originate
+// from the same issuer-side object so order is preserved (and any mismatch just
+// throws -- fail-closed).
 function modifyForVerify({
   proof,
   document
@@ -52,7 +60,7 @@ function modifyForVerify({
     : [document['@context']]
 
   for (let i = 0; i < proofContext.length; i++) {
-    if (proofContext[i] !== docContext[i]) {
+    if (JSON.stringify(proofContext[i]) !== JSON.stringify(docContext[i])) {
       throw new Error(
         'document.@context does not start with proof.@context'
       )

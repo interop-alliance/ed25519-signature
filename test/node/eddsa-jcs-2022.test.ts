@@ -96,6 +96,37 @@ describe('eddsa-jcs-2022 cryptosuite', () => {
       expect(result.verified).toBe(false)
     })
 
+    // Regression: an inline @context object must still match after the VC is
+    // serialized and re-parsed (the realistic transport path). A reference
+    // (`!==`) compare would wrongly reject this; the check compares by value.
+    it('accepts a serialized VC carrying an inline @context object', async () => {
+      const keyPair = await Ed25519VerificationKey.from(mockKeyPair2020)
+      const signer = createSigner(keyPair)
+
+      // jcsCredential['@context'] includes the inline {AlumniCredential, ...}
+      // object at index 1.
+      expect(typeof jcsCredential['@context'][1]).toBe('object')
+
+      const signed = await jsigs.sign({ ...jcsCredential }, {
+        suite: new DataIntegrityProof({
+          cryptosuite: createSignCryptosuite(),
+          signer
+        }),
+        purpose: new AssertionProofPurpose(),
+        documentLoader
+      })
+
+      // Round-trip through JSON, as a verifier receiving the VC would.
+      const roundTripped = JSON.parse(JSON.stringify(signed))
+
+      const result = await jsigs.verify(roundTripped, {
+        suite: new DataIntegrityProof({ cryptosuite: createVerifyCryptosuite() }),
+        purpose: new AssertionProofPurpose(),
+        documentLoader
+      })
+      expect(result.verified).toBe(true)
+    })
+
     it('accepts when document @context starts with proof @context', async () => {
       const keyPair = await Ed25519VerificationKey.from(mockKeyPair2020)
       const signer = createSigner(keyPair)

@@ -1,0 +1,7 @@
+allowBuilds:
+  esbuild: set this to true or false
+minimumReleaseAgeExclude:
+  - '@interop/did-method-key@6.1.0'
+  - '@interop/did-web-resolver@6.0.0'
+  - '@interop/ed25519-verification-key@6.2.0'
+  - '@interop/security-document-loader@9.0.0'

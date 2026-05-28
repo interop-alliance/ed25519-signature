@@ -1,4 +1,4 @@
-import { securityLoader } from '@digitalcredentials/security-document-loader'
+import { securityLoader } from '@interop/security-document-loader'
 import type { DocumentLoader } from '@interop/jsonld-signatures'
 import {
   controllerDoc2020,

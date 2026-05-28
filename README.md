@@ -1,145 +1,253 @@
-# Ed25519Signature2020 suite _(@digitalbazaar/ed25519-signature-2020)_
+# @interop/ed25519-signature
 
-[![Build status](https://img.shields.io/github/actions/workflow/status/digitalbazaar/ed25519-signature-2020/main.yml?branch=main)](https://github.com/digitalbazaar/ed25519-signature-2020/actions?query=workflow%3A%22Node.js+CI%22)
-[![Coverage status](https://img.shields.io/codecov/c/github/digitalbazaar/ed25519-signature-2020)](https://codecov.io/gh/digitalbazaar/ed25519-signature-2020)
-[![NPM Version](https://img.shields.io/npm/v/@digitalbazaar/ed25519-signature-2020.svg)](https://npm.im/digitalbazaar/ed25519-signature-2020)
+> Ed25519 Linked Data / Data Integrity signature suites for use with
+> [`jsonld-signatures`](https://github.com/digitalbazaar/jsonld-signatures),
+> in TypeScript.
 
-> Ed25519Signature2020 Linked Data Proof suite for use with jsonld-signatures.
+One package providing all three Ed25519 Verifiable Credential proof flavors,
+unified on the `DataIntegrityProof` container model:
+
+| Suite                  | `proof.type`           | `proof.cryptosuite` | Canonicalization |
+|------------------------|------------------------|---------------------|------------------|
+| `Ed25519Signature2020` | `Ed25519Signature2020` | (absent)            | RDFC-1.0         |
+| `eddsa-rdfc-2022`      | `DataIntegrityProof`   | `eddsa-rdfc-2022`   | RDFC-1.0         |
+| `eddsa-jcs-2022`       | `DataIntegrityProof`   | `eddsa-jcs-2022`    | JCS (RFC 8785)   |
+
+This is a TypeScript rewrite and rename-in-place of
+`@digitalbazaar/ed25519-signature-2020` (v6). The full design and migration
+history live in [`refactor-plan.md`](./refactor-plan.md); contributor-facing
+architecture notes are in [`CLAUDE.md`](./CLAUDE.md).
 
 ## Table of Contents
 
 - [Background](#background)
-- [Security](#security)
 - [Install](#install)
+- [Subpath imports](#subpath-imports)
 - [Usage](#usage)
+  - [`Ed25519Signature2020`](#ed25519signature2020)
+  - [`eddsa-rdfc-2022`](#eddsa-rdfc-2022)
+  - [`eddsa-jcs-2022`](#eddsa-jcs-2022)
+  - [Verifying a mixed proof set](#verifying-a-mixed-proof-set)
+- [API asymmetry across suites](#api-asymmetry-across-suites)
+- [The `createSigner` requirement](#the-createsigner-requirement)
 - [Contribute](#contribute)
-- [Commercial Support](#commercial-support)
 - [License](#license)
 
 ## Background
 
-For use with https://github.com/digitalbazaar/jsonld-signatures v9.0 and above.
+Lets a downstream consumer issue and verify all three Ed25519 proof types -- as
+they appear mixed in VC `proof` arrays and DID documents -- through one package,
+one container concept (`DataIntegrityProof`), one key library
+([`@interop/ed25519-verification-key`](https://github.com/interop-alliance/ed25519-verification-key),
+which reads Multikey + 2020 + 2018 + JWK), and one toolchain.
 
-See also related specs:
+The legacy `Ed25519Signature2020` suite is implemented as a thin subclass of
+`DataIntegrityProof` rather than a `LinkedDataSignature` subclass, so the
+container, key library, and signing payload are shared with the
+data-integrity suites. Its signed bytes are byte-identical to the legacy
+`@digitalbazaar/ed25519-signature-2020` suite (a pinned acceptance test).
 
-* [Ed25519Signature2020 Crypto Suite](https://w3c.github.io/vc-di-eddsa/)
-
-## Security
-
-TBD
+Related spec: [Verifiable Credential Data Integrity / EdDSA Cryptosuites](https://w3c.github.io/vc-di-eddsa/).
 
 ## Install
 
-- Browsers and Node.js 14+ are supported.
-
-To install from NPM:
+Node.js 20+ and modern browsers are supported. This package is ESM-only.
 
 ```
-npm install @digitalbazaar/ed25519-signature-2020
+npm install @interop/ed25519-signature
 ```
 
-To install locally (for development):
+`@interop/jsonld-signatures` is an optional peer dependency -- install it
+alongside if you use the `jsigs.sign` / `jsigs.verify` entry points shown below.
 
+## Subpath imports
+
+Each suite has its own subpath export, so a JCS-only consumer is not forced to
+pull in the heavy `jsonld` / `rdf-canonize` machinery that only the RDFC suites
+need (the package is `sideEffects: false` for tree-shaking). Prefer the
+leaf-scoped import for the suite you actually use:
+
+```js
+import { Ed25519Signature2020 } from '@interop/ed25519-signature/ed25519-signature-2020'
+import { eddsaRdfc2022 } from '@interop/ed25519-signature/eddsa-rdfc-2022'
+import {
+  createSignCryptosuite,
+  createVerifyCryptosuite
+} from '@interop/ed25519-signature/eddsa-jcs-2022'
 ```
-git clone https://github.com/digitalbazaar/ed25519-signature-2020.git
-cd ed25519-signature-2020
-npm install
+
+A convenience root barrel re-exports everything (plus `createSigner` /
+`createVerifier`) for when bundle size is not a concern:
+
+```js
+import { Ed25519Signature2020, eddsaRdfc2022, createSigner } from '@interop/ed25519-signature'
 ```
 
 ## Usage
 
-The following code snippet provides a complete example of digitally signing
-a verifiable credential using this library:
+The examples share this setup:
 
-```javascript
-import jsigs from 'jsonld-signatures';
-const {purposes: {AssertionProofPurpose}} = jsigs;
-import {Ed25519VerificationKey2020} from
-  '@digitalbazaar/ed25519-verification-key-2020';
-import {Ed25519Signature2020, suiteContext} from
-  '@digitalbazaar/ed25519-signature-2020';
+```js
+import jsigs from '@interop/jsonld-signatures'
+import { Ed25519VerificationKey } from '@interop/ed25519-verification-key'
 
-// create the unsigned credential
-const unsignedCredential = {
-  '@context': [
-    'https://www.w3.org/2018/credentials/v1',
-    {
-      AlumniCredential: 'https://schema.org#AlumniCredential',
-      alumniOf: 'https://schema.org#alumniOf'
-    }
-  ],
-  id: 'http://example.edu/credentials/1872',
-  type: [ 'VerifiableCredential', 'AlumniCredential' ],
-  issuer: 'https://example.edu/issuers/565049',
-  issuanceDate: '2010-01-01T19:23:24Z',
-  credentialSubject: {
-    id: 'https://example.edu/students/alice',
-    alumniOf: 'Example University'
-  }
-};
+const { purposes: { AssertionProofPurpose } } = jsigs
 
-// create the keypair to use when signing
-const controller = 'https://example.edu/issuers/565049';
-const keyPair = await Ed25519VerificationKey2020.from({
+const controller = 'https://example.edu/issuers/565049'
+const keyPair = await Ed25519VerificationKey.from({
   type: 'Ed25519VerificationKey2020',
   controller,
   id: controller + '#z6MknCCLeeHBUaHu4aHSVLDCYQW9gjVJ7a63FpMvtuVMy53T',
   publicKeyMultibase: 'z6MknCCLeeHBUaHu4aHSVLDCYQW9gjVJ7a63FpMvtuVMy53T',
-  privateKeyMultibase: 'zrv2EET2WWZ8T1Jbg4fEH5cQxhbUS22XxdweypUbjWVzv1YD6VqYu' +
-    'W6LH7heQCNYQCuoKaDwvv2qCWz3uBzG2xesqmf'
-});
+  privateKeyMultibase:
+    'zrv2EET2WWZ8T1Jbg4fEH5cQxhbUS22XxdweypUbjWVzv1YD6VqYuW6LH7heQCNYQCuoKaDwvv2qCWz3uBzG2xesqmf'
+})
 
-const suite = new Ed25519Signature2020({key: keyPair});
-suite.date = '2010-01-01T19:23:24Z';
+// Provide a documentLoader that resolves the VC contexts, the key, and its
+// controller. See test/node/documentLoader.ts for a securityLoader()-based one.
+```
 
-signedCredential = await jsigs.sign(unsignedCredential, {
-  suite,
+### `Ed25519Signature2020`
+
+A class extending `DataIntegrityProof`. Pass `keyPair.signer()` directly -- the
+constructor injects the required `algorithm` for you.
+
+```js
+import { Ed25519Signature2020 } from '@interop/ed25519-signature/ed25519-signature-2020'
+
+const credential = {
+  '@context': [
+    'https://www.w3.org/2018/credentials/v1',
+    { AlumniCredential: 'https://schema.org#AlumniCredential', alumniOf: 'https://schema.org#alumniOf' },
+    'https://w3id.org/security/suites/ed25519-2020/v1'
+  ],
+  id: 'http://example.edu/credentials/1872',
+  type: ['VerifiableCredential', 'AlumniCredential'],
+  issuer: controller,
+  issuanceDate: '2010-01-01T19:23:24Z',
+  credentialSubject: { id: 'https://example.edu/students/alice', alumniOf: 'Example University' }
+}
+
+const signed = await jsigs.sign({ ...credential }, {
+  suite: new Ed25519Signature2020({ signer: keyPair.signer() }),
   purpose: new AssertionProofPurpose(),
   documentLoader
-});
+})
+// signed.proof.type === 'Ed25519Signature2020'  (no `cryptosuite` field)
 
-// results in the following signed VC
-{
-  "@context": [
-    "https://www.w3.org/2018/credentials/v1",
-    {
-      "AlumniCredential": "https://schema.org#AlumniCredential",
-      "alumniOf": "https://schema.org#alumniOf"
-    },
-    "https://w3id.org/security/suites/ed25519-2020/v1"
-  ],
-  "id": "http://example.edu/credentials/1872",
-  "type": ["VerifiableCredential", "AlumniCredential"],
-  "issuer": "https://example.edu/issuers/565049",
-  "issuanceDate": "2010-01-01T19:23:24Z",
-  "credentialSubject": {
-    "id": "https://example.edu/students/alice",
-    "alumniOf": "Example University"
-  },
-  "proof": {
-    "type": "Ed25519Signature2020",
-    "created": "2010-01-01T19:23:24Z",
-    "verificationMethod": "https://example.edu/issuers/565049#z6MknCCLeeHBUaHu4aHSVLDCYQW9gjVJ7a63FpMvtuVMy53T",
-    "proofPurpose": "assertionMethod",
-    "proofValue": "z3MvGcVxzRzzpKF1HA11EjvfPZsN8NAb7kXBRfeTm3CBg2gcJLQM5hZNmj6Ccd9Lk4C1YueiFZvkSx4FuHVYVouQk"
-  }
-}
+const result = await jsigs.verify(signed, {
+  suite: new Ed25519Signature2020(),
+  purpose: new AssertionProofPurpose(),
+  documentLoader
+})
+// result.verified === true
 ```
+
+### `eddsa-rdfc-2022`
+
+A static cryptosuite object used with a bare `DataIntegrityProof`. On the sign
+side, wrap the key with `createSigner` (see
+[below](#the-createsigner-requirement)).
+
+```js
+import { DataIntegrityProof } from '@digitalbazaar/data-integrity'
+import { eddsaRdfc2022 } from '@interop/ed25519-signature/eddsa-rdfc-2022'
+import { createSigner } from '@interop/ed25519-signature'
+
+// The VC @context must include 'https://w3id.org/security/data-integrity/v2'.
+const signed = await jsigs.sign({ ...diCredential }, {
+  suite: new DataIntegrityProof({ cryptosuite: eddsaRdfc2022, signer: createSigner(keyPair) }),
+  purpose: new AssertionProofPurpose(),
+  documentLoader
+})
+// signed.proof.type === 'DataIntegrityProof', signed.proof.cryptosuite === 'eddsa-rdfc-2022'
+
+const result = await jsigs.verify(signed, {
+  suite: new DataIntegrityProof({ cryptosuite: eddsaRdfc2022 }),
+  purpose: new AssertionProofPurpose(),
+  documentLoader
+})
+```
+
+### `eddsa-jcs-2022`
+
+Split sign / verify factories (not a single object). The sign cryptosuite's
+`createVerifier` throws, as a sign-only guard.
+
+```js
+import { DataIntegrityProof } from '@digitalbazaar/data-integrity'
+import { createSignCryptosuite, createVerifyCryptosuite } from '@interop/ed25519-signature/eddsa-jcs-2022'
+import { createSigner } from '@interop/ed25519-signature'
+
+const signed = await jsigs.sign({ ...diCredential }, {
+  suite: new DataIntegrityProof({ cryptosuite: createSignCryptosuite(), signer: createSigner(keyPair) }),
+  purpose: new AssertionProofPurpose(),
+  documentLoader
+})
+// signed.proof.cryptosuite === 'eddsa-jcs-2022'
+
+const result = await jsigs.verify(signed, {
+  suite: new DataIntegrityProof({ cryptosuite: createVerifyCryptosuite() }),
+  purpose: new AssertionProofPurpose(),
+  documentLoader
+})
+```
+
+JCS verification enforces the spec's context-prefix ordering check: the
+document's `@context` must start with the proof's `@context`, in order.
+
+### Verifying a mixed proof set
+
+A single VC can carry one of each proof type in its `proof` array; pass all the
+matching suites to one `jsigs.verify` call and they are disambiguated by
+`matchProof`:
+
+```js
+const result = await jsigs.verify(signed, {
+  suite: [
+    new Ed25519Signature2020(),
+    new DataIntegrityProof({ cryptosuite: eddsaRdfc2022 }),
+    new DataIntegrityProof({ cryptosuite: createVerifyCryptosuite() })
+  ],
+  purpose: new AssertionProofPurpose(),
+  documentLoader
+})
+```
+
+Note the proof-set semantics of `jsonld-signatures`: `result.verified` is `true`
+if **any** matched proof verifies. Inspect `result.results` for the per-proof
+outcome.
+
+## API asymmetry across suites
+
+The three suites expose deliberately different shapes, because the specs do --
+a class (`Ed25519Signature2020`), a static cryptosuite object
+(`eddsa-rdfc-2022`), and sign/verify factories (`eddsa-jcs-2022`). This is
+intentional; don't try to abstract over it.
+
+## The `createSigner` requirement
+
+`DataIntegrityProof` asserts `signer.algorithm === 'Ed25519'` at construction.
+In the Digital Bazaar ecosystem the key library supplies that property;
+`@interop/ed25519-verification-key` does not (yet), so when using a **bare**
+`DataIntegrityProof` (the rdfc / jcs suites) wrap the key with `createSigner`:
+
+```js
+import { createSigner } from '@interop/ed25519-signature'
+new DataIntegrityProof({ cryptosuite: eddsaRdfc2022, signer: createSigner(keyPair) })
+```
+
+The `Ed25519Signature2020` class does this for you, so there you can pass
+`keyPair.signer()` directly. `createSigner` is idempotent
+(`algorithm ?? 'Ed25519'`), so it becomes a no-op once the key library sets
+`algorithm` itself.
 
 ## Contribute
 
-See [the contribute file](https://github.com/digitalbazaar/bedrock/blob/master/CONTRIBUTING.md)!
-
-PRs accepted.
-
-If editing the Readme, please conform to the
-[standard-readme](https://github.com/RichardLitt/standard-readme) specification.
-
-## Commercial Support
-
-Commercial support for this library is available upon request from
-Digital Bazaar: support@digitalbazaar.com
+PRs accepted. See [`CLAUDE.md`](./CLAUDE.md) for toolchain, project layout, and
+the testing rules (notably: never hand-roll JSON-LD `@context` documents in
+tests).
 
 ## License
 
-[New BSD License (3-clause)](LICENSE) © 2020 Digital Bazaar
+[New BSD License (3-clause)](LICENSE)

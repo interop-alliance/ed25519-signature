@@ -1,5 +1,8 @@
 # @interop/ed25519-signature
 
+[![Node.js CI](https://github.com/interop-alliance/ed25519-signature/workflows/CI/badge.svg)](https://github.com/interop-alliance/ed25519-signature/actions?query=workflow%3A%22CI%22)
+[![NPM Version](https://img.shields.io/npm/v/@interop/ed25519-signature.svg)](https://npm.im/@interop/ed25519-signature)
+
 > Ed25519 Linked Data / Data Integrity signature suites for use with
 > [`jsonld-signatures`](https://github.com/digitalbazaar/jsonld-signatures),
 > in TypeScript.

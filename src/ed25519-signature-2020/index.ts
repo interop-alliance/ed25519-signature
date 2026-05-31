@@ -1,5 +1,6 @@
 import { DataIntegrityProof } from '@digitalbazaar/data-integrity'
-import type { ProofLike, SignerLike } from '@digitalbazaar/data-integrity'
+import type { ProofLike } from '@digitalbazaar/data-integrity'
+import type { ISigner } from '@digitalcredentials/ssi'
 import { ed25519Sig2020Cryptosuite } from './cryptosuite.js'
 import { ensureSignerAlgorithm } from '../core/createSigner.js'
 import suiteContext2020 from 'ed25519-signature-2020-context'
@@ -14,14 +15,14 @@ export class Ed25519Signature2020 extends DataIntegrityProof {
     signer,
     date
   }: {
-    signer?: Omit<SignerLike, 'algorithm'> & { algorithm?: string }
+    signer?: ISigner
     date?: string | Date | number | null
   } = {}) {
     // Cryptosuite has no `name`, so this.cryptosuite stays undefined --
     // matching the absent cryptosuite field on legacy 2020 proofs.
-    // DataIntegrityProof validates signer.algorithm; ensure it is set
-    // (the @interop/ed25519-verification-key signer doesn't set algorithm).
-    const wrappedSigner: SignerLike | undefined = signer
+    // DataIntegrityProof validates signer.algorithm; ensure it is set for
+    // ISigner sources that leave `algorithm` unset.
+    const wrappedSigner: ISigner | undefined = signer
       ? ensureSignerAlgorithm(signer)
       : undefined
     super({ signer: wrappedSigner, date, cryptosuite: ed25519Sig2020Cryptosuite })

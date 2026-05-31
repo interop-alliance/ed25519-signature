@@ -1,28 +1,18 @@
 // Type declarations for untyped runtime dependencies.
 
 declare module '@digitalbazaar/data-integrity' {
+  import type { ISigner, IVerifier } from '@digitalcredentials/ssi'
+
   export interface CryptosuiteLike {
     name?: string
     canonize?: (input: unknown, options?: unknown) => Promise<string>
     createVerifier: (options: {
       verificationMethod: unknown
-    }) => Promise<VerifierLike>
+    }) => Promise<IVerifier>
     requiredAlgorithm?: string | string[]
     createVerifyData?: (options: unknown) => Promise<Uint8Array>
     createProofValue?: (options: unknown) => Promise<string>
     derive?: (options: unknown) => Promise<unknown>
-  }
-
-  export interface SignerLike {
-    sign(options: { data: Uint8Array }): Promise<Uint8Array>
-    id: string
-    algorithm: string
-  }
-
-  export interface VerifierLike {
-    verify(options: { data: Uint8Array; signature: Uint8Array }): Promise<boolean>
-    algorithm: string
-    id?: string
   }
 
   export interface ProofLike {
@@ -39,19 +29,19 @@ declare module '@digitalbazaar/data-integrity' {
     type: string
     cryptosuite: string | undefined
     contextUrl: string
-    signer: SignerLike | undefined
+    signer: ISigner | undefined
     verificationMethod: string | undefined
     canonize: (input: unknown, options?: unknown) => Promise<string>
     createVerifier: (options: {
       verificationMethod: unknown
-    }) => Promise<VerifierLike>
+    }) => Promise<IVerifier>
     requiredAlgorithm: string | string[]
     date: Date | null | undefined
     _cryptosuite: CryptosuiteLike
     _hashCache?: { document: unknown; hash: Promise<Uint8Array> }
 
     constructor(options?: {
-      signer?: SignerLike
+      signer?: ISigner
       date?: string | Date | number | null
       cryptosuite: CryptosuiteLike
       legacyContext?: boolean

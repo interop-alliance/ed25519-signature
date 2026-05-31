@@ -5,3 +5,4 @@ minimumReleaseAgeExclude:
   - '@interop/did-web-resolver@6.0.0'
   - '@interop/ed25519-verification-key@6.2.0'
   - '@interop/security-document-loader@9.0.0'
+  - '@digitalcredentials/ssi@5.5.0'

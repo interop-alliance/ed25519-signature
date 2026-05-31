@@ -11,6 +11,9 @@ importers:
       '@digitalbazaar/data-integrity':
         specifier: ^2.5.0
         version: 2.5.0
+      '@digitalcredentials/ssi':
+        specifier: ^5.5.0
+        version: 5.5.0
       '@interop/ed25519-verification-key':
         specifier: ^6.2.0
         version: 6.2.0
@@ -197,6 +200,10 @@ packages:
 
   '@digitalcredentials/ssi@5.4.2':
     resolution: {integrity: sha512-/rNw47tbC8661tNzVBbKfmX6jaZT+NE7PhPkaFzHdMIzzY8knGotiPqp+8UjjWcQTkzXrqeu1AktRSAnEF+IFw==}
+    engines: {node: '>=20.0'}
+
+  '@digitalcredentials/ssi@5.5.0':
+    resolution: {integrity: sha512-vKJwLlab+SPqOygpcreSbQZxP+hIwcLq7rJYA+oHFJQqrTXatWl9oWW+cnCv5R4VCARUhPOUio5xhM/v8YdXXA==}
     engines: {node: '>=20.0'}
 
   '@emnapi/core@1.10.0':
@@ -2118,6 +2125,8 @@ snapshots:
   '@digitalcredentials/open-badges-context@3.0.0': {}
 
   '@digitalcredentials/ssi@5.4.2': {}
+
+  '@digitalcredentials/ssi@5.5.0': {}
 
   '@emnapi/core@1.10.0':
     dependencies:

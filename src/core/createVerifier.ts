@@ -1,11 +1,11 @@
-import type { IVerifier } from '@digitalcredentials/ssi'
+import type { IVerifier, IVerificationMethod } from '@interop/data-integrity-core'
 import { Ed25519VerificationKey } from '@interop/ed25519-verification-key'
 import { requiredAlgorithm } from './requiredAlgorithm.js'
 
 export async function createVerifier({
   verificationMethod
 }: {
-  verificationMethod: unknown
+  verificationMethod: IVerificationMethod
 }): Promise<IVerifier> {
   // verificationMethod is one of: Multikey, Ed25519VerificationKey2020,
   // Ed25519VerificationKey2018, or JsonWebKey2020

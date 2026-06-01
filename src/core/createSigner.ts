@@ -1,4 +1,4 @@
-import type { ISigner } from '@digitalcredentials/ssi'
+import type { ISigner } from '@interop/data-integrity-core'
 import { requiredAlgorithm } from './requiredAlgorithm.js'
 
 /**

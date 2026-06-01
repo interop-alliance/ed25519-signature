@@ -43,7 +43,7 @@
     "typecheck": "tsc -p tsconfig.dev.json --noEmit",
     "prepare": "pnpm run build",
     "rebuild": "pnpm run clear && pnpm run build",
-    "test": "pnpm run lint && pnpm run typecheck && pnpm run test-node",
+    "test": "pnpm run lint && pnpm run typecheck && pnpm run test-node && pnpm run test-browser",
     "test-browser": "playwright test",
     "test-node": "vitest run",
     "test-coverage": "vitest run --coverage"
@@ -55,9 +55,9 @@
   },
   "license": "BSD-3-Clause",
   "dependencies": {
-    "@digitalbazaar/data-integrity": "^2.5.0",
-    "@digitalcredentials/ssi": "^5.5.0",
-    "@interop/ed25519-verification-key": "^6.2.0",
+    "@interop/data-integrity-core": "^6.1.0",
+    "@interop/data-integrity-proof": "^3.1.0",
+    "@interop/ed25519-verification-key": "^7.0.0",
     "@interop/jsonld": "^9.0.2",
     "canonicalize": "^2.0.0",
     "ed25519-signature-2020-context": "^1.1.0",

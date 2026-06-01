@@ -1,6 +1,5 @@
-import { DataIntegrityProof } from '@digitalbazaar/data-integrity'
-import type { ProofLike } from '@digitalbazaar/data-integrity'
-import type { ISigner } from '@digitalcredentials/ssi'
+import { DataIntegrityProof } from '@interop/data-integrity-proof'
+import type { ISigner, IProofDescription } from '@interop/data-integrity-core'
 import { ed25519Sig2020Cryptosuite } from './cryptosuite.js'
 import { ensureSignerAlgorithm } from '../core/createSigner.js'
 import suiteContext2020 from 'ed25519-signature-2020-context'
@@ -36,9 +35,9 @@ export class Ed25519Signature2020 extends DataIntegrityProof {
   override async updateProof({
     proof
   }: {
-    proof: ProofLike
+    proof: IProofDescription
     [key: string]: unknown
-  }): Promise<ProofLike> {
+  }): Promise<IProofDescription> {
     delete proof.cryptosuite
     return proof
   }

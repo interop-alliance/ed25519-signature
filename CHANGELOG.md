@@ -1,6 +1,6 @@
 # @interop/ed25519-signature Changelog
 
-## 7.0.0 - TBD
+## 7.0.0 - 2026-06-01
 ### Changed
 - **BREAKING:** Swap dependencies onto the renamed, now-typed Interop forks:
   `@digitalbazaar/data-integrity` to `@interop/data-integrity-proof@^3.1.0`

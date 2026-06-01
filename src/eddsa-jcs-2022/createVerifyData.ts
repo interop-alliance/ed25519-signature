@@ -1,5 +1,5 @@
 import { sha256 } from '../core/sha256.js'
-import type { ProofLike } from '@digitalbazaar/data-integrity'
+import type { IProofDescription } from '@interop/data-integrity-core'
 
 const NAME = 'eddsa-jcs-2022'
 
@@ -11,7 +11,7 @@ function concat(b1: Uint8Array, b2: Uint8Array): Uint8Array {
 }
 
 async function canonizeProof(
-  proofOptions: ProofLike,
+  proofOptions: IProofDescription,
   canonize: (input: unknown) => Promise<string>
 ): Promise<string> {
   const proof = { ...proofOptions }
@@ -24,11 +24,11 @@ function modifyForSign({
   proof,
   document
 }: {
-  proof: ProofLike
+  proof: IProofDescription
   document: Record<string, unknown>
 }): void {
   if (document['@context']) {
-    proof['@context'] = document['@context']
+    proof['@context'] = document['@context'] as IProofDescription['@context']
   }
 }
 
@@ -46,7 +46,7 @@ function modifyForVerify({
   proof,
   document
 }: {
-  proof: ProofLike
+  proof: IProofDescription
   document: Record<string, unknown>
 }): void {
   if (!proof['@context']) {
@@ -77,7 +77,7 @@ export function createVerifyDataFn(mode: 'sign' | 'verify'): CreateVerifyDataFn 
     const { cryptosuite, document, proof } = opts as {
       cryptosuite: { name: string; canonize(input: unknown): Promise<string> }
       document: Record<string, unknown>
-      proof: ProofLike
+      proof: IProofDescription
     }
     if (cryptosuite?.name !== NAME) {
       throw new TypeError(`"cryptosuite.name" must be "${NAME}".`)

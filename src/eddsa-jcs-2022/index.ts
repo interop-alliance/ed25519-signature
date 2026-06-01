@@ -2,7 +2,7 @@ import { canonize } from './canonize.js'
 import { createVerifier } from '../core/createVerifier.js'
 import { requiredAlgorithm } from '../core/requiredAlgorithm.js'
 import { createVerifyDataFn, type CreateVerifyDataFn } from './createVerifyData.js'
-import type { CryptosuiteLike } from '@digitalbazaar/data-integrity'
+import type { Cryptosuite } from '@interop/data-integrity-proof'
 
 const NAME = 'eddsa-jcs-2022'
 
@@ -13,7 +13,7 @@ function throwSignUsageError(): never {
   )
 }
 
-export interface JcsSignCryptosuite extends CryptosuiteLike {
+export interface JcsSignCryptosuite extends Cryptosuite {
   name: string
   canonize: typeof canonize
   requiredAlgorithm: string
@@ -21,7 +21,7 @@ export interface JcsSignCryptosuite extends CryptosuiteLike {
   createVerifyData: CreateVerifyDataFn
 }
 
-export interface JcsVerifyCryptosuite extends CryptosuiteLike {
+export interface JcsVerifyCryptosuite extends Cryptosuite {
   name: string
   canonize: typeof canonize
   requiredAlgorithm: string

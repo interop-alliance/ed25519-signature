@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll } from 'vitest'
-import { DataIntegrityProof } from '@digitalbazaar/data-integrity'
+import { DataIntegrityProof } from '@interop/data-integrity-proof'
 import jsigs from '@interop/jsonld-signatures'
 import { Ed25519VerificationKey } from '@interop/ed25519-verification-key'
 import { Ed25519Signature2020 } from '../../src/ed25519-signature-2020/index.js'

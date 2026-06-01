@@ -153,7 +153,7 @@ side, wrap the key with `createSigner` (see
 [below](#the-createsigner-requirement)).
 
 ```js
-import { DataIntegrityProof } from '@digitalbazaar/data-integrity'
+import { DataIntegrityProof } from '@interop/data-integrity-proof'
 import { eddsaRdfc2022 } from '@interop/ed25519-signature/eddsa-rdfc-2022'
 import { createSigner } from '@interop/ed25519-signature'
 
@@ -178,7 +178,7 @@ Split sign / verify factories (not a single object). The sign cryptosuite's
 `createVerifier` throws, as a sign-only guard.
 
 ```js
-import { DataIntegrityProof } from '@digitalbazaar/data-integrity'
+import { DataIntegrityProof } from '@interop/data-integrity-proof'
 import { createSignCryptosuite, createVerifyCryptosuite } from '@interop/ed25519-signature/eddsa-jcs-2022'
 import { createSigner } from '@interop/ed25519-signature'
 

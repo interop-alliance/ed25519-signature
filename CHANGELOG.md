@@ -1,5 +1,20 @@
 # @interop/ed25519-signature Changelog
 
+## 7.0.0 - TBD
+### Changed
+- **BREAKING:** Swap dependencies onto the renamed, now-typed Interop forks:
+  `@digitalbazaar/data-integrity` to `@interop/data-integrity-proof@^3.1.0`
+  (`DataIntegrityProof`, `Cryptosuite`), and `@digitalcredentials/ssi` to
+  `@interop/data-integrity-core@^6.1.0` (`ISigner`, `IVerifier`,
+  `IVerificationMethod`, `IProofDescription`). Require
+  `@interop/ed25519-verification-key@^7.0.0`.
+- Because `@interop/data-integrity-proof` ships its own types, the
+  `@digitalbazaar/data-integrity` ambient declaration is removed from
+  `src/vendor.d.ts`; the local `ProofLike` / `CryptosuiteLike` types are
+  replaced by upstream `IProofDescription` / `Cryptosuite`. The name-less
+  `Ed25519Signature2020` cryptosuite types without a cast now that
+  `Cryptosuite.name` is optional upstream.
+
 ## 6.0.0-6.0.1 - 2026-05-27
 ### Changed
 - **BREAKING: Renamed** from `@digitalbazaar/ed25519-signature-2020` to

@@ -2,7 +2,7 @@
 // Vite resolves the bare deps and (via vite.config.ts alias) remaps the JCS
 // suite's sha256.js to sha256-browser.ts, so a JCS round-trip exercises the
 // crypto.subtle path. Reuses the node mock-data and document loader.
-import { DataIntegrityProof } from '@digitalbazaar/data-integrity'
+import { DataIntegrityProof } from '@interop/data-integrity-proof'
 import jsigs from '@interop/jsonld-signatures'
 import { Ed25519VerificationKey } from '@interop/ed25519-verification-key'
 import { Ed25519Signature2020 } from '../../src/ed25519-signature-2020/index.js'

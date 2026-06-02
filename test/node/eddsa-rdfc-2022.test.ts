@@ -7,7 +7,9 @@ import { createSigner } from '../../src/core/createSigner.js'
 import { credential, mockKeyPair2020 } from './mock-data.js'
 import { documentLoader } from './documentLoader.js'
 
-const { purposes: { AssertionProofPurpose } } = jsigs as any
+const {
+  purposes: { AssertionProofPurpose }
+} = jsigs as any
 
 // eddsa-rdfc-2022 uses DataIntegrityProof context
 const DI_CONTEXT_URL = 'https://w3id.org/security/data-integrity/v2'
@@ -36,11 +38,14 @@ describe('eddsa-rdfc-2022 cryptosuite', () => {
 
     const suite = new DataIntegrityProof({ cryptosuite: eddsaRdfc2022, signer })
 
-    const signed: any = await jsigs.sign({ ...rdfc2022Credential }, {
-      suite,
-      purpose: new AssertionProofPurpose(),
-      documentLoader
-    })
+    const signed: any = await jsigs.sign(
+      { ...rdfc2022Credential },
+      {
+        suite,
+        purpose: new AssertionProofPurpose(),
+        documentLoader
+      }
+    )
 
     expect(signed.proof.type).toBe('DataIntegrityProof')
     expect(signed.proof.cryptosuite).toBe('eddsa-rdfc-2022')

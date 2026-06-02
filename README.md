@@ -11,7 +11,7 @@ One package providing all three Ed25519 Verifiable Credential proof flavors,
 unified on the `DataIntegrityProof` container model:
 
 | Suite                  | `proof.type`           | `proof.cryptosuite` | Canonicalization |
-|------------------------|------------------------|---------------------|------------------|
+| ---------------------- | ---------------------- | ------------------- | ---------------- |
 | `Ed25519Signature2020` | `Ed25519Signature2020` | (absent)            | RDFC-1.0         |
 | `eddsa-rdfc-2022`      | `DataIntegrityProof`   | `eddsa-rdfc-2022`   | RDFC-1.0         |
 | `eddsa-jcs-2022`       | `DataIntegrityProof`   | `eddsa-jcs-2022`    | JCS (RFC 8785)   |
@@ -83,7 +83,11 @@ A convenience root barrel re-exports everything (plus `createSigner` /
 `createVerifier`) for when bundle size is not a concern:
 
 ```js
-import { Ed25519Signature2020, eddsaRdfc2022, createSigner } from '@interop/ed25519-signature'
+import {
+  Ed25519Signature2020,
+  eddsaRdfc2022,
+  createSigner
+} from '@interop/ed25519-signature'
 ```
 
 ## Usage
@@ -94,7 +98,9 @@ The examples share this setup:
 import jsigs from '@interop/jsonld-signatures'
 import { Ed25519VerificationKey } from '@interop/ed25519-verification-key'
 
-const { purposes: { AssertionProofPurpose } } = jsigs
+const {
+  purposes: { AssertionProofPurpose }
+} = jsigs
 
 const controller = 'https://example.edu/issuers/565049'
 const keyPair = await Ed25519VerificationKey.from({
@@ -121,21 +127,30 @@ import { Ed25519Signature2020 } from '@interop/ed25519-signature/ed25519-signatu
 const credential = {
   '@context': [
     'https://www.w3.org/2018/credentials/v1',
-    { AlumniCredential: 'https://schema.org#AlumniCredential', alumniOf: 'https://schema.org#alumniOf' },
+    {
+      AlumniCredential: 'https://schema.org#AlumniCredential',
+      alumniOf: 'https://schema.org#alumniOf'
+    },
     'https://w3id.org/security/suites/ed25519-2020/v1'
   ],
   id: 'http://example.edu/credentials/1872',
   type: ['VerifiableCredential', 'AlumniCredential'],
   issuer: controller,
   issuanceDate: '2010-01-01T19:23:24Z',
-  credentialSubject: { id: 'https://example.edu/students/alice', alumniOf: 'Example University' }
+  credentialSubject: {
+    id: 'https://example.edu/students/alice',
+    alumniOf: 'Example University'
+  }
 }
 
-const signed = await jsigs.sign({ ...credential }, {
-  suite: new Ed25519Signature2020({ signer: keyPair.signer() }),
-  purpose: new AssertionProofPurpose(),
-  documentLoader
-})
+const signed = await jsigs.sign(
+  { ...credential },
+  {
+    suite: new Ed25519Signature2020({ signer: keyPair.signer() }),
+    purpose: new AssertionProofPurpose(),
+    documentLoader
+  }
+)
 // signed.proof.type === 'Ed25519Signature2020'  (no `cryptosuite` field)
 
 const result = await jsigs.verify(signed, {
@@ -158,11 +173,17 @@ import { eddsaRdfc2022 } from '@interop/ed25519-signature/eddsa-rdfc-2022'
 import { createSigner } from '@interop/ed25519-signature'
 
 // The VC @context must include 'https://w3id.org/security/data-integrity/v2'.
-const signed = await jsigs.sign({ ...diCredential }, {
-  suite: new DataIntegrityProof({ cryptosuite: eddsaRdfc2022, signer: createSigner(keyPair) }),
-  purpose: new AssertionProofPurpose(),
-  documentLoader
-})
+const signed = await jsigs.sign(
+  { ...diCredential },
+  {
+    suite: new DataIntegrityProof({
+      cryptosuite: eddsaRdfc2022,
+      signer: createSigner(keyPair)
+    }),
+    purpose: new AssertionProofPurpose(),
+    documentLoader
+  }
+)
 // signed.proof.type === 'DataIntegrityProof', signed.proof.cryptosuite === 'eddsa-rdfc-2022'
 
 const result = await jsigs.verify(signed, {
@@ -179,14 +200,23 @@ Split sign / verify factories (not a single object). The sign cryptosuite's
 
 ```js
 import { DataIntegrityProof } from '@interop/data-integrity-proof'
-import { createSignCryptosuite, createVerifyCryptosuite } from '@interop/ed25519-signature/eddsa-jcs-2022'
+import {
+  createSignCryptosuite,
+  createVerifyCryptosuite
+} from '@interop/ed25519-signature/eddsa-jcs-2022'
 import { createSigner } from '@interop/ed25519-signature'
 
-const signed = await jsigs.sign({ ...diCredential }, {
-  suite: new DataIntegrityProof({ cryptosuite: createSignCryptosuite(), signer: createSigner(keyPair) }),
-  purpose: new AssertionProofPurpose(),
-  documentLoader
-})
+const signed = await jsigs.sign(
+  { ...diCredential },
+  {
+    suite: new DataIntegrityProof({
+      cryptosuite: createSignCryptosuite(),
+      signer: createSigner(keyPair)
+    }),
+    purpose: new AssertionProofPurpose(),
+    documentLoader
+  }
+)
 // signed.proof.cryptosuite === 'eddsa-jcs-2022'
 
 const result = await jsigs.verify(signed, {
@@ -237,7 +267,10 @@ In the Digital Bazaar ecosystem the key library supplies that property;
 
 ```js
 import { createSigner } from '@interop/ed25519-signature'
-new DataIntegrityProof({ cryptosuite: eddsaRdfc2022, signer: createSigner(keyPair) })
+new DataIntegrityProof({
+  cryptosuite: eddsaRdfc2022,
+  signer: createSigner(keyPair)
+})
 ```
 
 The `Ed25519Signature2020` class does this for you, so there you can pass

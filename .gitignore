@@ -108,7 +108,9 @@ dist
 *.sw[nop]
 
 # VSCode
-.vscode
+/.vscode/*
+!/.vscode/extensions.json
+!/.vscode/settings.json
 
 # Playwright
 playwright-report/

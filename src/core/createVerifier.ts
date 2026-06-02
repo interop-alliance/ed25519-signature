@@ -1,4 +1,7 @@
-import type { IVerifier, IVerificationMethod } from '@interop/data-integrity-core'
+import type {
+  IVerifier,
+  IVerificationMethod
+} from '@interop/data-integrity-core'
 import { Ed25519VerificationKey } from '@interop/ed25519-verification-key'
 import { requiredAlgorithm } from './requiredAlgorithm.js'
 

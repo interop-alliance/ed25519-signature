@@ -1,5 +1,5 @@
 import { securityLoader } from '@interop/security-document-loader'
-import type { DocumentLoader } from '@interop/jsonld-signatures'
+import type { IDocumentLoader } from '@interop/data-integrity-core/loader'
 import {
   controllerDoc2020,
   mockPublicKey2020,
@@ -24,7 +24,7 @@ const STATIC_DOCS: Record<string, unknown> = {
 
 export function buildDocumentLoader(
   extra: Record<string, unknown> = {}
-): DocumentLoader {
+): IDocumentLoader {
   const loader = securityLoader()
   for (const [url, document] of Object.entries({ ...STATIC_DOCS, ...extra })) {
     loader.addStatic(url, document)

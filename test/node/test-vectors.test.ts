@@ -2,10 +2,16 @@ import { describe, it, expect, beforeAll } from 'vitest'
 import jsigs from '@interop/jsonld-signatures'
 import { Ed25519VerificationKey } from '@interop/ed25519-verification-key'
 import { Ed25519Signature2020 } from '../../src/ed25519-signature-2020/index.js'
-import { specKeyMaterial, specPublicKey, specSignedFixture } from './mock-data.js'
+import {
+  specKeyMaterial,
+  specPublicKey,
+  specSignedFixture
+} from './mock-data.js'
 import { documentLoader } from './documentLoader.js'
 
-const { purposes: { AssertionProofPurpose } } = jsigs as any
+const {
+  purposes: { AssertionProofPurpose }
+} = jsigs as any
 
 describe('vc-di-eddsa spec test vectors (Ed25519Signature2020)', () => {
   let keyPair: Awaited<ReturnType<typeof Ed25519VerificationKey.from>>

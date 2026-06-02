@@ -15,7 +15,9 @@ import { createSigner } from '../../src/core/createSigner.js'
 import { credential, mockKeyPair2020 } from '../node/mock-data.js'
 import { documentLoader } from '../node/documentLoader.js'
 
-const { purposes: { AssertionProofPurpose } } = jsigs as any
+const {
+  purposes: { AssertionProofPurpose }
+} = jsigs as any
 
 const DI_CONTEXT_URL = 'https://w3id.org/security/data-integrity/v2'
 
@@ -32,11 +34,14 @@ const diCredential = {
 
 export async function roundTrip2020(): Promise<boolean> {
   const keyPair = await Ed25519VerificationKey.from(mockKeyPair2020)
-  const signed = await jsigs.sign({ ...credential }, {
-    suite: new Ed25519Signature2020({ signer: keyPair.signer() }),
-    purpose: new AssertionProofPurpose(),
-    documentLoader
-  })
+  const signed = await jsigs.sign(
+    { ...credential },
+    {
+      suite: new Ed25519Signature2020({ signer: keyPair.signer() }),
+      purpose: new AssertionProofPurpose(),
+      documentLoader
+    }
+  )
   const result = await jsigs.verify(signed, {
     suite: new Ed25519Signature2020(),
     purpose: new AssertionProofPurpose(),
@@ -47,14 +52,17 @@ export async function roundTrip2020(): Promise<boolean> {
 
 export async function roundTripRdfc(): Promise<boolean> {
   const keyPair = await Ed25519VerificationKey.from(mockKeyPair2020)
-  const signed = await jsigs.sign({ ...diCredential }, {
-    suite: new DataIntegrityProof({
-      cryptosuite: eddsaRdfc2022,
-      signer: createSigner(keyPair)
-    }),
-    purpose: new AssertionProofPurpose(),
-    documentLoader
-  })
+  const signed = await jsigs.sign(
+    { ...diCredential },
+    {
+      suite: new DataIntegrityProof({
+        cryptosuite: eddsaRdfc2022,
+        signer: createSigner(keyPair)
+      }),
+      purpose: new AssertionProofPurpose(),
+      documentLoader
+    }
+  )
   const result = await jsigs.verify(signed, {
     suite: new DataIntegrityProof({ cryptosuite: eddsaRdfc2022 }),
     purpose: new AssertionProofPurpose(),
@@ -65,14 +73,17 @@ export async function roundTripRdfc(): Promise<boolean> {
 
 export async function roundTripJcs(): Promise<boolean> {
   const keyPair = await Ed25519VerificationKey.from(mockKeyPair2020)
-  const signed = await jsigs.sign({ ...diCredential }, {
-    suite: new DataIntegrityProof({
-      cryptosuite: createSignCryptosuite(),
-      signer: createSigner(keyPair)
-    }),
-    purpose: new AssertionProofPurpose(),
-    documentLoader
-  })
+  const signed = await jsigs.sign(
+    { ...diCredential },
+    {
+      suite: new DataIntegrityProof({
+        cryptosuite: createSignCryptosuite(),
+        signer: createSigner(keyPair)
+      }),
+      purpose: new AssertionProofPurpose(),
+      documentLoader
+    }
+  )
   const result = await jsigs.verify(signed, {
     suite: new DataIntegrityProof({ cryptosuite: createVerifyCryptosuite() }),
     purpose: new AssertionProofPurpose(),

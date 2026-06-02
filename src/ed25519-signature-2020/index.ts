@@ -24,7 +24,11 @@ export class Ed25519Signature2020 extends DataIntegrityProof {
     const wrappedSigner: ISigner | undefined = signer
       ? ensureSignerAlgorithm(signer)
       : undefined
-    super({ signer: wrappedSigner, date, cryptosuite: ed25519Sig2020Cryptosuite })
+    super({
+      signer: wrappedSigner,
+      date,
+      cryptosuite: ed25519Sig2020Cryptosuite
+    })
     this.type = 'Ed25519Signature2020'
     this.contextUrl = SUITE_CONTEXT_URL
   }

@@ -10,7 +10,9 @@ import { createSigner } from '../../src/core/createSigner.js'
 import { credential, mockKeyPair2020 } from './mock-data.js'
 import { documentLoader } from './documentLoader.js'
 
-const { purposes: { AssertionProofPurpose } } = jsigs as any
+const {
+  purposes: { AssertionProofPurpose }
+} = jsigs as any
 
 const DI_CONTEXT_URL = 'https://w3id.org/security/data-integrity/v2'
 
@@ -52,11 +54,14 @@ describe('eddsa-jcs-2022 cryptosuite', () => {
       signer
     })
 
-    const signed: any = await jsigs.sign({ ...jcsCredential }, {
-      suite: signSuite,
-      purpose: new AssertionProofPurpose(),
-      documentLoader
-    })
+    const signed: any = await jsigs.sign(
+      { ...jcsCredential },
+      {
+        suite: signSuite,
+        purpose: new AssertionProofPurpose(),
+        documentLoader
+      }
+    )
 
     expect(signed.proof.type).toBe('DataIntegrityProof')
     expect(signed.proof.cryptosuite).toBe('eddsa-jcs-2022')
@@ -74,14 +79,17 @@ describe('eddsa-jcs-2022 cryptosuite', () => {
       const keyPair = await Ed25519VerificationKey.from(mockKeyPair2020)
       const signer = createSigner(keyPair)
 
-      const signed = await jsigs.sign({ ...jcsCredential }, {
-        suite: new DataIntegrityProof({
-          cryptosuite: createSignCryptosuite(),
-          signer
-        }),
-        purpose: new AssertionProofPurpose(),
-        documentLoader
-      })
+      const signed = await jsigs.sign(
+        { ...jcsCredential },
+        {
+          suite: new DataIntegrityProof({
+            cryptosuite: createSignCryptosuite(),
+            signer
+          }),
+          purpose: new AssertionProofPurpose(),
+          documentLoader
+        }
+      )
 
       // Tamper: reorder document @context so it no longer starts with proof @context
       const tampered = JSON.parse(JSON.stringify(signed))
@@ -89,7 +97,9 @@ describe('eddsa-jcs-2022 cryptosuite', () => {
       ;[docCtx[0], docCtx[1]] = [docCtx[1]!, docCtx[0]!]
 
       const result = await jsigs.verify(tampered, {
-        suite: new DataIntegrityProof({ cryptosuite: createVerifyCryptosuite() }),
+        suite: new DataIntegrityProof({
+          cryptosuite: createVerifyCryptosuite()
+        }),
         purpose: new AssertionProofPurpose(),
         documentLoader
       })
@@ -107,20 +117,25 @@ describe('eddsa-jcs-2022 cryptosuite', () => {
       // object at index 1.
       expect(typeof jcsCredential['@context'][1]).toBe('object')
 
-      const signed = await jsigs.sign({ ...jcsCredential }, {
-        suite: new DataIntegrityProof({
-          cryptosuite: createSignCryptosuite(),
-          signer
-        }),
-        purpose: new AssertionProofPurpose(),
-        documentLoader
-      })
+      const signed = await jsigs.sign(
+        { ...jcsCredential },
+        {
+          suite: new DataIntegrityProof({
+            cryptosuite: createSignCryptosuite(),
+            signer
+          }),
+          purpose: new AssertionProofPurpose(),
+          documentLoader
+        }
+      )
 
       // Round-trip through JSON, as a verifier receiving the VC would.
       const roundTripped = JSON.parse(JSON.stringify(signed))
 
       const result = await jsigs.verify(roundTripped, {
-        suite: new DataIntegrityProof({ cryptosuite: createVerifyCryptosuite() }),
+        suite: new DataIntegrityProof({
+          cryptosuite: createVerifyCryptosuite()
+        }),
         purpose: new AssertionProofPurpose(),
         documentLoader
       })
@@ -131,17 +146,22 @@ describe('eddsa-jcs-2022 cryptosuite', () => {
       const keyPair = await Ed25519VerificationKey.from(mockKeyPair2020)
       const signer = createSigner(keyPair)
 
-      const signed = await jsigs.sign({ ...jcsCredential }, {
-        suite: new DataIntegrityProof({
-          cryptosuite: createSignCryptosuite(),
-          signer
-        }),
-        purpose: new AssertionProofPurpose(),
-        documentLoader
-      })
+      const signed = await jsigs.sign(
+        { ...jcsCredential },
+        {
+          suite: new DataIntegrityProof({
+            cryptosuite: createSignCryptosuite(),
+            signer
+          }),
+          purpose: new AssertionProofPurpose(),
+          documentLoader
+        }
+      )
 
       const result = await jsigs.verify(signed, {
-        suite: new DataIntegrityProof({ cryptosuite: createVerifyCryptosuite() }),
+        suite: new DataIntegrityProof({
+          cryptosuite: createVerifyCryptosuite()
+        }),
         purpose: new AssertionProofPurpose(),
         documentLoader
       })

@@ -61,9 +61,7 @@ function modifyForVerify({
 
   for (let i = 0; i < proofContext.length; i++) {
     if (JSON.stringify(proofContext[i]) !== JSON.stringify(docContext[i])) {
-      throw new Error(
-        'document.@context does not start with proof.@context'
-      )
+      throw new Error('document.@context does not start with proof.@context')
     }
   }
   // Adopt proof @context for canonicalization
@@ -72,7 +70,9 @@ function modifyForVerify({
 
 export type CreateVerifyDataFn = (opts: unknown) => Promise<Uint8Array>
 
-export function createVerifyDataFn(mode: 'sign' | 'verify'): CreateVerifyDataFn {
+export function createVerifyDataFn(
+  mode: 'sign' | 'verify'
+): CreateVerifyDataFn {
   return async function (opts: unknown) {
     const { cryptosuite, document, proof } = opts as {
       cryptosuite: { name: string; canonize(input: unknown): Promise<string> }

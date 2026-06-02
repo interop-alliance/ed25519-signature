@@ -12,7 +12,9 @@ import { createSigner } from '../../src/core/createSigner.js'
 import { credential, mockKeyPair2020 } from './mock-data.js'
 import { documentLoader } from './documentLoader.js'
 
-const { purposes: { AssertionProofPurpose } } = jsigs as any
+const {
+  purposes: { AssertionProofPurpose }
+} = jsigs as any
 
 const DI_CONTEXT_URL = 'https://w3id.org/security/data-integrity/v2'
 
@@ -31,11 +33,14 @@ describe('mixed proof array (one VC, three proof types)', () => {
     const keyPair = await Ed25519VerificationKey.from(mockKeyPair2020)
 
     // 1) Ed25519Signature2020 (legacy proof, no cryptosuite field)
-    signed = await jsigs.sign({ ...mixedCredential }, {
-      suite: new Ed25519Signature2020({ signer: keyPair.signer() }),
-      purpose: new AssertionProofPurpose(),
-      documentLoader
-    })
+    signed = await jsigs.sign(
+      { ...mixedCredential },
+      {
+        suite: new Ed25519Signature2020({ signer: keyPair.signer() }),
+        purpose: new AssertionProofPurpose(),
+        documentLoader
+      }
+    )
 
     // 2) eddsa-rdfc-2022 (DataIntegrityProof, RDFC-1.0) -- appends to proof set
     signed = await jsigs.sign(signed, {

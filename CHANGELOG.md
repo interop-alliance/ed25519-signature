@@ -1,5 +1,16 @@
 # @interop/ed25519-signature Changelog
 
+## Unreleased - TBD
+
+### Added
+
+- Export `EddsaJcs2022`, a ready-to-instantiate signing suite class for the
+  `eddsa-jcs-2022` cryptosuite. It bakes in `createSignCryptosuite()` and
+  exposes the same `new SuiteClass({ signer, date })` constructor contract as
+  `Ed25519Signature2020`, so consumers that instantiate a suite by class (e.g.
+  `@interop/ezcap`'s `ZcapClient`) can select `eddsa-jcs-2022`. Use
+  `createVerifyCryptosuite()` for the verification side.
+
 ## 7.0.1 - 2026-06-02
 
 ### Changed

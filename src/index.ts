@@ -7,5 +7,6 @@ export {
   createSignCryptosuite,
   createVerifyCryptosuite
 } from './eddsa-jcs-2022/index.js'
+export { EddsaJcs2022 } from './eddsa-jcs-2022/EddsaJcs2022.js'
 export { createSigner, ensureSignerAlgorithm } from './core/createSigner.js'
 export { createVerifier } from './core/createVerifier.js'

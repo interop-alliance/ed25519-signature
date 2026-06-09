@@ -55,16 +55,16 @@
   },
   "license": "BSD-3-Clause",
   "dependencies": {
-    "@interop/data-integrity-core": "^6.1.0",
-    "@interop/data-integrity-proof": "^3.2.1",
-    "@interop/ed25519-verification-key": "^7.0.1",
+    "@interop/data-integrity-core": "^7.0.0",
+    "@interop/data-integrity-proof": "^3.3.1",
+    "@interop/ed25519-verification-key": "^8.0.0",
     "@interop/jsonld": "^9.0.2",
-    "canonicalize": "^2.0.0",
+    "canonicalize": "^3.0.0",
     "ed25519-signature-2020-context": "^1.1.0",
     "rdf-canonize": "^5.0.0"
   },
   "peerDependencies": {
-    "@interop/jsonld-signatures": "^11.6.7"
+    "@interop/jsonld-signatures": "^11.7.1"
   },
   "peerDependenciesMeta": {
     "@interop/jsonld-signatures": {
@@ -72,9 +72,9 @@
     }
   },
   "devDependencies": {
-    "@interop/security-document-loader": "^9.2.1",
     "@eslint/js": "^10.0.1",
-    "@interop/jsonld-signatures": "^11.6.7",
+    "@interop/jsonld-signatures": "^11.7.1",
+    "@interop/security-document-loader": "^9.2.3",
     "@playwright/test": "^1.60.0",
     "@types/node": "^25.9.1",
     "@vitest/coverage-v8": "^4.1.7",
@@ -92,7 +92,7 @@
     "access": "public",
     "provenance": true
   },
-  "packageManager": "pnpm@11.3.0",
+  "packageManager": "pnpm@11.5.2",
   "engines": {
     "node": ">=24.0"
   }

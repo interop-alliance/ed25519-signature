@@ -1,6 +1,6 @@
 {
   "name": "@interop/ed25519-signature",
-  "version": "7.1.0",
+  "version": "7.1.1",
   "description": "Ed25519 Linked Data / Data Integrity signature suites (Ed25519Signature2020, eddsa-rdfc-2022, eddsa-jcs-2022) in TypeScript.",
   "type": "module",
   "sideEffects": false,

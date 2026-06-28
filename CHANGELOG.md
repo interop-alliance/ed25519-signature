@@ -1,5 +1,12 @@
 # @interop/ed25519-signature Changelog
 
+## 7.1.3 - 2026-06-28
+
+### Changed
+
+- Update to `@interop/data-integrity-core@8.1.0` and related.
+- Import `canonicalize@3` dynamically (solves ESM-only issues).
+
 ## 7.1.2 - 2026-06-13
 
 ### Changed

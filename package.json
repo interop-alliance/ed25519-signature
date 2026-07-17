@@ -55,9 +55,9 @@
   },
   "license": "BSD-3-Clause",
   "dependencies": {
-    "@interop/data-integrity-core": "^8.1.0",
-    "@interop/data-integrity-proof": "^3.4.1",
-    "@interop/ed25519-verification-key": "^8.0.2",
+    "@interop/data-integrity-core": "^8.3.0",
+    "@interop/data-integrity-proof": "^3.4.2",
+    "@interop/ed25519-verification-key": "^8.0.3",
     "@interop/jsonld": "^9.0.3",
     "canonicalize": "^3.0.0",
     "ed25519-signature-2020-context": "^1.1.0",
@@ -73,8 +73,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@interop/jsonld-signatures": "^11.8.2",
-    "@interop/security-document-loader": "^9.4.1",
+    "@interop/jsonld-signatures": "^11.8.3",
+    "@interop/security-document-loader": "^9.4.2",
     "@playwright/test": "^1.60.0",
     "@types/node": "^25.9.1",
     "@vitest/coverage-v8": "^4.1.7",

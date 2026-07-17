@@ -1,5 +1,11 @@
 # @interop/ed25519-signature Changelog
 
+## 7.1.4 - 2026-07
+
+### Changed
+
+- Update to `@interop/data-integrity-core@8.3.0` and related.
+
 ## 7.1.3 - 2026-06-28
 
 ### Changed

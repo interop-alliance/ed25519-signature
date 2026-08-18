@@ -282,7 +282,8 @@ The `Ed25519Signature2020` class does this for you, so there you can pass
 
 PRs accepted. See [`CLAUDE.md`](./CLAUDE.md) for toolchain, project layout, and
 the testing rules (notably: never hand-roll JSON-LD `@context` documents in
-tests).
+tests), and [`CONTRIBUTING.md`](CONTRIBUTING.md) for code style and contribution
+conventions.
 
 ## License
 

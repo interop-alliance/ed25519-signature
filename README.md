@@ -75,7 +75,8 @@ import { Ed25519Signature2020 } from '@interop/ed25519-signature/ed25519-signatu
 import { eddsaRdfc2022 } from '@interop/ed25519-signature/eddsa-rdfc-2022'
 import {
   createSignCryptosuite,
-  createVerifyCryptosuite
+  createVerifyCryptosuite,
+  EddsaJcs2022
 } from '@interop/ed25519-signature/eddsa-jcs-2022'
 ```
 
@@ -228,6 +229,31 @@ const result = await jsigs.verify(signed, {
 
 JCS verification enforces the spec's context-prefix ordering check: the
 document's `@context` must start with the proof's `@context`, in order.
+
+#### `EddsaJcs2022`
+
+A consumer that takes a suite _class_ and instantiates it itself -- ezcap's
+`ZcapClient` takes a `SuiteClass` and calls `new SuiteClass({ signer, date })`
+inside `delegate()` -- cannot be handed a cryptosuite object. `EddsaJcs2022` is
+a `DataIntegrityProof` subclass with the sign cryptosuite baked in, so it
+matches that constructor contract:
+
+```js
+import { EddsaJcs2022 } from '@interop/ed25519-signature/eddsa-jcs-2022'
+
+const zcapClient = new ZcapClient({
+  SuiteClass: EddsaJcs2022,
+  invocationSigner: signer,
+  delegationSigner: signer
+})
+```
+
+It exposes no static `CONTEXT` / `CONTEXT_URL`, because JCS canonicalization
+needs no JSON-LD expansion and so no document loader has to serve the
+data-integrity context at signing time. (`DataIntegrityProof` still appends
+that context URL to the signed document, for downstream verifiers.) Use
+`createVerifyCryptosuite()` for the verification side; there is no verify-side
+class.
 
 ### Verifying a mixed proof set
 

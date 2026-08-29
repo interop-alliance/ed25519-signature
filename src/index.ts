@@ -5,8 +5,8 @@ export {
 export { eddsaRdfc2022 } from './eddsa-rdfc-2022/index.js'
 export {
   createSignCryptosuite,
-  createVerifyCryptosuite
+  createVerifyCryptosuite,
+  EddsaJcs2022
 } from './eddsa-jcs-2022/index.js'
-export { EddsaJcs2022 } from './eddsa-jcs-2022/EddsaJcs2022.js'
 export { createSigner, ensureSignerAlgorithm } from './core/createSigner.js'
 export { createVerifier } from './core/createVerifier.js'

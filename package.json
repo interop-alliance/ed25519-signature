@@ -74,7 +74,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@interop/jsonld-signatures": "^11.8.5",
-    "@interop/security-document-loader": "^10.0.2",
+    "@interop/security-document-loader": "^10.0.4",
     "@playwright/test": "^1.60.0",
     "@types/node": "^25.9.1",
     "@vitest/coverage-v8": "^4.1.7",

@@ -7,6 +7,8 @@ import {
 } from './createVerifyData.js'
 import type { Cryptosuite } from '@interop/data-integrity-proof'
 
+export { EddsaJcs2022 } from './EddsaJcs2022.js'
+
 const NAME = 'eddsa-jcs-2022'
 
 function throwSignUsageError(): never {

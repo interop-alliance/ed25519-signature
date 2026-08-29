@@ -1,8 +1,23 @@
 # @interop/ed25519-signature Changelog
 
+## 7.2.0 - TBD
+
+### Added
+
+- Export `EddsaJcs2022` from the `./eddsa-jcs-2022` subpath. It was reachable
+  only from the root barrel, which also pulls in the RDFC suites -- the opposite
+  of what the subpath exists for, since a `SuiteClass` consumer picking JCS is
+  doing so to leave `jsonld` / `rdf-canonize` out of its signing path. The root
+  export is unchanged.
+
+### Changed
+
+- Document `EddsaJcs2022` in the README's `eddsa-jcs-2022` section.
+
 ## 7.1.5 - 2026-08-18
 
 ### Changed
+
 - Update to latest `@interop/data-integrity-core@8.7.1`.
 
 ## 7.1.4 - 2026-07-17

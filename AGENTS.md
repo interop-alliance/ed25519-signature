@@ -72,12 +72,14 @@ The `test` script does **not** run the dev typecheck; run
 - `test/node/` — Vitest (`pnpm run test-node`); the active test suite.
 - `test/browser/` — Playwright (`pnpm run test-browser`) via a Vite dev server
   (`pnpm run dev`), mirroring the verification-key package. There is no browser
-  app; the `dev` server only serves/transforms TS source for Playwright. The
-  specs (`suites.spec.ts`, one sign/verify round-trip per suite, exercising
-  `sha256-browser.ts`) pass. They were previously blocked on
-  `@digitalcredentials` loader-chain packaging bugs; switching to the
-  `@interop/security-document-loader` fork (clean ESM, `@interop/did-io`) cleared
-  them. See `refactor-plan.md` §13.
+  app; the `dev` server only serves/transforms TS source for Playwright. It runs
+  on a dedicated port (5183, `strictPort`) rather than Vite's default 5173, so
+  another checkout's dev server cannot be reused by Playwright and serve its own
+  SPA fallback in place of our modules. The specs (`suites.spec.ts`, one
+  sign/verify round-trip per suite, exercising `sha256-browser.ts`) pass. They
+  were previously blocked on `@digitalcredentials` loader-chain packaging bugs;
+  switching to the `@interop/security-document-loader` fork (clean ESM,
+  `@interop/did-io`) cleared them. See `refactor-plan.md` §13.
 - `pnpm test` runs `lint`, then the `tsconfig.dev.json` typecheck, then
   `test-node`.
 

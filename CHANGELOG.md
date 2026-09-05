@@ -1,5 +1,11 @@
 # @interop/ed25519-signature Changelog
 
+## 7.2.1 - TBD
+
+### Changed
+
+- Update to latest ed25519 dep (multikey decode).
+
 ## 7.2.0 - 2026-08-29
 
 ### Added

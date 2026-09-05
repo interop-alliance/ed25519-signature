@@ -15,8 +15,8 @@ importers:
         specifier: ^3.4.5
         version: 3.4.5
       '@interop/ed25519-verification-key':
-        specifier: ^8.0.4
-        version: 8.0.4
+        specifier: ^8.1.0
+        version: 8.1.0
       '@interop/jsonld':
         specifier: ^9.0.3
         version: 9.0.3
@@ -37,8 +37,8 @@ importers:
         specifier: ^11.8.5
         version: 11.8.5
       '@interop/security-document-loader':
-        specifier: ^10.0.4
-        version: 10.0.4
+        specifier: ^10.1.0
+        version: 10.1.0
       '@playwright/test':
         specifier: ^1.60.0
         version: 1.61.1
@@ -242,6 +242,15 @@ packages:
       react-native-get-random-values:
         optional: true
 
+  '@interop/ed25519-verification-key@8.1.0':
+    resolution: {integrity: sha512-kj8aYyTTxBofETxKmKDbrjXyAHAsXLxnfMLwumu2BYjPfwKBN8QxUkEeeKa0x1wovGIefcTAsuASGMYC4Y2TUg==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      react-native-get-random-values: '>=1.8.0'
+    peerDependenciesMeta:
+      react-native-get-random-values:
+        optional: true
+
   '@interop/http-client@1.0.4':
     resolution: {integrity: sha512-ceCNf8f7ktcMIyPILINzqrleejdzpIaFGoQKZYTWthIC0i1fxSBt5VHC7Sy8MmSomc3tPk2OMI7KqjnF3Ng/XQ==}
     engines: {node: '>=22.12'}
@@ -262,8 +271,8 @@ packages:
     resolution: {integrity: sha512-6c8dnoQNIiL25Q4YovC1a44mREO1lzW3F/lmvdwbAMMbhtGGRoQeqo1H4diwNhBzaxRrUMXrAIwbM26POmI/Yg==}
     engines: {node: '>=24.0'}
 
-  '@interop/security-document-loader@10.0.4':
-    resolution: {integrity: sha512-hk2pTGOiSuG0BEB6mzT+HF7RvgcBDnNEc3tJJVndjfqxHVHt57Cx8p2aguQ7GpCy+6s0EW2yxqLgwvxGvwI0SQ==}
+  '@interop/security-document-loader@10.1.0':
+    resolution: {integrity: sha512-uOjmPRNTXqAFcWd41S2Q0LjJUb2if9KElydxkiRyeYyUWxTNkkv2tAn83l28uMNtIIEmxwViyTaoED5pjZ43Yw==}
     engines: {node: '>=24.0'}
 
   '@jridgewell/resolve-uri@3.1.2':
@@ -1358,7 +1367,14 @@ snapshots:
       '@interop/data-integrity-core': 8.7.1
       '@noble/ed25519': 3.1.0
       '@noble/hashes': 2.2.0
-      '@scure/base': 2.2.0
+      '@scure/base': 2.3.0
+
+  '@interop/ed25519-verification-key@8.1.0':
+    dependencies:
+      '@interop/data-integrity-core': 8.7.1
+      '@noble/ed25519': 3.1.0
+      '@noble/hashes': 2.2.0
+      '@scure/base': 2.3.0
 
   '@interop/http-client@1.0.4':
     dependencies:
@@ -1390,7 +1406,7 @@ snapshots:
     dependencies:
       lru-cache: 11.5.2
 
-  '@interop/security-document-loader@10.0.4':
+  '@interop/security-document-loader@10.1.0':
     dependencies:
       '@digitalbazaar/data-integrity-context': 2.0.1
       '@digitalbazaar/multikey-context': 2.0.1

@@ -1,5 +1,11 @@
 # @interop/ed25519-signature Changelog
 
+## 7.2.2 - TBD
+
+### Changed
+
+- Update to latest ed25519 key dep (`didKeySigner()`).
+
 ## 7.2.1 - 2026-09-05
 
 ### Changed

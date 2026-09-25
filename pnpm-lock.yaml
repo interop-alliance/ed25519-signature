@@ -9,14 +9,14 @@ importers:
   .:
     dependencies:
       '@interop/data-integrity-core':
-        specifier: ^8.7.1
-        version: 8.7.1
+        specifier: ^8.8.0
+        version: 8.8.0
       '@interop/data-integrity-proof':
-        specifier: ^3.4.5
-        version: 3.4.5
+        specifier: ^3.4.6
+        version: 3.4.6
       '@interop/ed25519-verification-key':
-        specifier: ^8.2.0
-        version: 8.2.0
+        specifier: ^8.2.1
+        version: 8.2.1
       '@interop/jsonld':
         specifier: ^9.0.3
         version: 9.0.3
@@ -34,11 +34,11 @@ importers:
         specifier: ^10.0.1
         version: 10.0.1(eslint@10.7.0)
       '@interop/jsonld-signatures':
-        specifier: ^11.8.5
-        version: 11.8.5
+        specifier: ^11.8.6
+        version: 11.8.6
       '@interop/security-document-loader':
-        specifier: ^10.1.1
-        version: 10.1.1
+        specifier: ^10.1.2
+        version: 10.1.2
       '@playwright/test':
         specifier: ^1.60.0
         version: 1.61.1
@@ -209,28 +209,36 @@ packages:
     resolution: {integrity: sha512-KD/AFAfnsDVa7Kz3yzx0t/L1A+GlFI0RahbtXsfzcznRlN63fPZCJ6W3C+unPyksCYsILZIHcOFFJkZe6eKtkw==}
     engines: {node: '>=24.0'}
 
-  '@interop/data-integrity-proof@3.4.5':
-    resolution: {integrity: sha512-AhZGbtvyiGzKBEPErjyrryS9OZ37o0TF7iEziFswzWCzu4P5oYUf/clOZdwrzjZCQKf7h8Kt1I03UUm+nRk5aQ==}
+  '@interop/data-integrity-core@8.8.0':
+    resolution: {integrity: sha512-c5zWCHMfMXmEBbJs8AZXvrvbNKVMnTXBcp5poojUtRhpEi9qHi81jF/F1NmLiVQApIQITpIDyBG7/79WxIjCzA==}
+    engines: {node: '>=24.0'}
+
+  '@interop/data-integrity-proof@3.4.6':
+    resolution: {integrity: sha512-vteTivZmS9NYjX3nByHZPd164YgzgCmTnj55Y+IQMOfqbvDb14fWhXryPBXRoF9m/qcknAXae/y6r/M7qy9EIg==}
     engines: {node: '>=24.0'}
 
   '@interop/did-io@4.1.1':
     resolution: {integrity: sha512-uD5cnRLoDq5TJWNYASv3HomQXr2xW2TanQZ13TPcmRRo+r8QGPn/DY10kiXw+FYArrUorn8xxjsSSw7C2zS94w==}
     engines: {node: '>=24.0'}
 
+  '@interop/did-io@4.1.2':
+    resolution: {integrity: sha512-Sv5ZoEMRCEYq5Ixg79QbYjAiZL3ao94BGFCz7uYgtpXyI6N0ZdMaEX+C4ar11SiszOadA0IM+Gnj/GanKKFqcA==}
+    engines: {node: '>=24.0'}
+
   '@interop/did-method-key@7.4.2':
     resolution: {integrity: sha512-/9Df4zsRcetJbwky8RL9gAWPHq2SxQ6Hu7bCLzlWBWmJJK0v2N+WwiLdUFOyXqFj4IBOUY36FeJvJA34wFBzXQ==}
     engines: {node: '>=24.0'}
 
-  '@interop/did-web-resolver@6.3.1':
-    resolution: {integrity: sha512-Qpa4kNUOpygwOUTOtM7Eg33Z6uE+2CQSWzw+q5bBcwKVb4edhnwLVUCz6U/7IBQRXKxQnoukMYPrhhXj/mQr9A==}
+  '@interop/did-web-resolver@6.3.4':
+    resolution: {integrity: sha512-6HdLulpop+zFlIziRaW0NAe1WMGyi5Yb4mYjVvVaqLnr70m6ElzFOFZTo4IgSUwGldUu5YQCw2dzZG9Dqv1o2A==}
     engines: {node: '>=24.0'}
 
   '@interop/ecdsa-multikey@2.4.0':
     resolution: {integrity: sha512-uR7L3MrPKZxMV5EEMsQxH3TCy0436Q+JgUaNIthe2e0VgsNo/YK7q+w9nSxjYEole4TcYonbbbROXwEKBJGePA==}
     engines: {node: '>=24.0'}
 
-  '@interop/ed25519-verification-key@8.1.0':
-    resolution: {integrity: sha512-kj8aYyTTxBofETxKmKDbrjXyAHAsXLxnfMLwumu2BYjPfwKBN8QxUkEeeKa0x1wovGIefcTAsuASGMYC4Y2TUg==}
+  '@interop/ed25519-verification-key@8.2.0':
+    resolution: {integrity: sha512-JG5sPe/9FHPsi41tmwz7f6UyKxULhoEABxIHKCKKxFgfrP52Wi6FFwnPYO93K254rw1cZI0omdqczN76F7dQdg==}
     engines: {node: '>=20'}
     peerDependencies:
       react-native-get-random-values: '>=1.8.0'
@@ -238,8 +246,8 @@ packages:
       react-native-get-random-values:
         optional: true
 
-  '@interop/ed25519-verification-key@8.2.0':
-    resolution: {integrity: sha512-JG5sPe/9FHPsi41tmwz7f6UyKxULhoEABxIHKCKKxFgfrP52Wi6FFwnPYO93K254rw1cZI0omdqczN76F7dQdg==}
+  '@interop/ed25519-verification-key@8.2.1':
+    resolution: {integrity: sha512-ft1j14xt6uu6T27begDXn15Cb7Mab1OZZOpbQxMhKyRrhKey56i+HMx2Ia53XPimhdXuVAGj7nCEFlcR4yOj1w==}
     engines: {node: '>=20'}
     peerDependencies:
       react-native-get-random-values: '>=1.8.0'
@@ -255,8 +263,8 @@ packages:
     resolution: {integrity: sha512-t/zL0+mQOjNkzj6usOv6MCOvG/HVOH1GG8Dbp03ympkf4NVOaJavBBJZuE05Xi1Sp4izmjHydDwnJLlzkZpzXQ==}
     engines: {node: '>=22.12'}
 
-  '@interop/jsonld-signatures@11.8.5':
-    resolution: {integrity: sha512-T1oOEeOaTxjrpX9iqHF2SrJg0Aqutk+rSOX9w0JAucM87nmhFalismAE5cQa85oQhvCg6O1kz7RLMRAhMR+SpA==}
+  '@interop/jsonld-signatures@11.8.6':
+    resolution: {integrity: sha512-0SzSwXubk5Xa7jFQUOnjV2JEekj05V+0RCJ1D9GMMlj57hBZg1W61inQwwF0tIit5siVw3gzqWI5vLiWmn9/sQ==}
     engines: {node: '>=18'}
 
   '@interop/jsonld@9.0.3':
@@ -267,8 +275,8 @@ packages:
     resolution: {integrity: sha512-6c8dnoQNIiL25Q4YovC1a44mREO1lzW3F/lmvdwbAMMbhtGGRoQeqo1H4diwNhBzaxRrUMXrAIwbM26POmI/Yg==}
     engines: {node: '>=24.0'}
 
-  '@interop/security-document-loader@10.1.1':
-    resolution: {integrity: sha512-ATCJlFQEPMSBlt9epaou6fazhWqgFLIRF5YwjS1nHFJlTnxsloHNA+BlXyo1TvjxiIM+Pvw3mmVubzVOEmF5fA==}
+  '@interop/security-document-loader@10.1.2':
+    resolution: {integrity: sha512-V0j+RmrtM8l2WeMfL6wznYlauIj0qSIrOvNhVNFU8Waew4qfivkClahQ6P8AYJdn/nm/Abz2X8nuLipKQ8GmeQ==}
     engines: {node: '>=24.0'}
 
   '@interop/x25519-key-agreement-key@5.4.0':
@@ -297,10 +305,6 @@ packages:
 
   '@noble/ed25519@3.1.0':
     resolution: {integrity: sha512-pfcObRY3CtvwfaG9Mt5XqZdKmAQppl37tHUeuBhDUbiwJBCVY4/A4lbMvb1xKhMDx96AqAqZpMWuBX1HulhX4g==}
-
-  '@noble/hashes@2.2.0':
-    resolution: {integrity: sha512-IYqDGiTXab6FniAgnSdZwgWbomxpy9FtYvLKs7wCUs2a8RkITG+DFGO1DM9cr+E3/RgADRpFjrKVaJ1z6sjtEg==}
-    engines: {node: '>= 20.19.0'}
 
   '@noble/hashes@2.4.0':
     resolution: {integrity: sha512-X5XaVWZIBCT7HHZGm5I7ZQXDwLG+bGXuSrMQAW+7Zvl87h1kmc1ZB1VSRJcpUfoUrGQp4Fkoxm5kZ+Ms+aW+eA==}
@@ -411,9 +415,6 @@ packages:
 
   '@rolldown/pluginutils@1.0.1':
     resolution: {integrity: sha512-2j9bGt5Jh8hj+vPtgzPtl72j0yRxHAyumoo6TNfAjsLB04UtpSvPbPcDcBMxz7n+9CYB0c1GxQFxYRg2jimqGw==}
-
-  '@scure/base@2.2.0':
-    resolution: {integrity: sha512-b8XEupJibegiXV+tDUseI8oLQc8ei3d/4Jkb2RpbHh3MfE054ov3uIz2dhFkB3FI8iwYkEh0gGCApkrYggkPNg==}
 
   '@scure/base@2.3.0':
     resolution: {integrity: sha512-NsG6Y03tY6R5BUis4FdVtHVkur0U6FOzskgs9ZXNl78CUc9fkZ78HmENUle1nSOkCasDmbubmWD9qwB7mm4PZA==}
@@ -1313,16 +1314,25 @@ snapshots:
     dependencies:
       '@scure/base': 2.3.0
 
-  '@interop/data-integrity-proof@3.4.5':
+  '@interop/data-integrity-core@8.8.0':
     dependencies:
-      '@interop/data-integrity-core': 8.7.1
-      '@interop/jsonld-signatures': 11.8.5
-      '@noble/hashes': 2.2.0
-      '@scure/base': 2.2.0
+      '@scure/base': 2.3.0
+
+  '@interop/data-integrity-proof@3.4.6':
+    dependencies:
+      '@interop/data-integrity-core': 8.8.0
+      '@interop/jsonld-signatures': 11.8.6
+      '@noble/hashes': 2.4.0
+      '@scure/base': 2.3.0
 
   '@interop/did-io@4.1.1':
     dependencies:
       '@interop/data-integrity-core': 8.7.1
+      '@interop/lru-memoize': 4.0.3
+
+  '@interop/did-io@4.1.2':
+    dependencies:
+      '@interop/data-integrity-core': 8.8.0
       '@interop/lru-memoize': 4.0.3
 
   '@interop/did-method-key@7.4.2':
@@ -1334,11 +1344,11 @@ snapshots:
     transitivePeerDependencies:
       - react-native-get-random-values
 
-  '@interop/did-web-resolver@6.3.1':
+  '@interop/did-web-resolver@6.3.4':
     dependencies:
       '@interop/bnid': 6.0.2
-      '@interop/data-integrity-core': 8.7.1
-      '@interop/did-io': 4.1.1
+      '@interop/data-integrity-core': 8.8.0
+      '@interop/did-io': 4.1.2
       '@interop/http-client': 1.0.5
       did-context: 3.1.1
     transitivePeerDependencies:
@@ -1349,18 +1359,18 @@ snapshots:
       '@interop/data-integrity-core': 8.7.1
       '@scure/base': 2.3.0
 
-  '@interop/ed25519-verification-key@8.1.0':
-    dependencies:
-      '@interop/data-integrity-core': 8.7.1
-      '@noble/ed25519': 3.1.0
-      '@noble/hashes': 2.2.0
-      '@scure/base': 2.3.0
-
   '@interop/ed25519-verification-key@8.2.0':
     dependencies:
       '@interop/data-integrity-core': 8.7.1
       '@noble/ed25519': 3.1.0
-      '@noble/hashes': 2.2.0
+      '@noble/hashes': 2.4.0
+      '@scure/base': 2.3.0
+
+  '@interop/ed25519-verification-key@8.2.1':
+    dependencies:
+      '@interop/data-integrity-core': 8.8.0
+      '@noble/ed25519': 3.1.0
+      '@noble/hashes': 2.4.0
       '@scure/base': 2.3.0
 
   '@interop/http-client@1.0.4':
@@ -1373,10 +1383,10 @@ snapshots:
       ky: 1.14.3
       undici: 7.28.0
 
-  '@interop/jsonld-signatures@11.8.5':
+  '@interop/jsonld-signatures@11.8.6':
     dependencies:
       '@digitalbazaar/security-context': 1.0.1
-      '@interop/data-integrity-core': 8.7.1
+      '@interop/data-integrity-core': 8.8.0
       '@interop/jsonld': 9.0.3
       fast-text-encoding: 1.0.6
       rdf-canonize: 5.0.0
@@ -1393,7 +1403,7 @@ snapshots:
     dependencies:
       lru-cache: 11.5.2
 
-  '@interop/security-document-loader@10.1.1':
+  '@interop/security-document-loader@10.1.2':
     dependencies:
       '@digitalbazaar/data-integrity-context': 2.0.1
       '@digitalbazaar/multikey-context': 2.0.1
@@ -1405,9 +1415,9 @@ snapshots:
       '@interop/data-integrity-core': 8.7.1
       '@interop/did-io': 4.1.1
       '@interop/did-method-key': 7.4.2
-      '@interop/did-web-resolver': 6.3.1
+      '@interop/did-web-resolver': 6.3.4
       '@interop/ecdsa-multikey': 2.4.0
-      '@interop/ed25519-verification-key': 8.1.0
+      '@interop/ed25519-verification-key': 8.2.0
       '@interop/http-client': 1.0.5
       aes-key-wrapping-2019-context: 1.0.3
       credentials-context: 2.0.0
@@ -1447,8 +1457,6 @@ snapshots:
       '@noble/hashes': 2.4.0
 
   '@noble/ed25519@3.1.0': {}
-
-  '@noble/hashes@2.2.0': {}
 
   '@noble/hashes@2.4.0': {}
 
@@ -1508,8 +1516,6 @@ snapshots:
     optional: true
 
   '@rolldown/pluginutils@1.0.1': {}
-
-  '@scure/base@2.2.0': {}
 
   '@scure/base@2.3.0': {}
 

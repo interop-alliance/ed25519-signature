@@ -1,6 +1,6 @@
 # @interop/ed25519-signature Changelog
 
-## 7.2.4 - TBD
+## 7.2.4 - 2026-10-06
 
 ### Changed
 

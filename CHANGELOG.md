@@ -1,5 +1,11 @@
 # @interop/ed25519-signature Changelog
 
+## 7.2.4 - TBD
+
+### Changed
+
+- Update to latest `@interop/jsonld-signatures@11.8.7`.
+
 ## 7.2.3 - 2026-09-25
 
 ### Changed

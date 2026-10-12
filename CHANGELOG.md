@@ -1,5 +1,11 @@
 # @interop/ed25519-signature Changelog
 
+## 7.2.5 - TBD
+
+### Changed
+
+- Update to latest jsigs and di core.
+
 ## 7.2.4 - 2026-10-06
 
 ### Changed
